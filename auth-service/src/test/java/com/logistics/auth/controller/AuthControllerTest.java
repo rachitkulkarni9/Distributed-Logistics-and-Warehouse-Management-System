@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -30,6 +30,10 @@ class AuthControllerTest {
 
     @MockBean
     private AuthService authService;
+
+    // SecurityConfig requires a UserDetailsService bean; provide a mock so the web slice loads
+    @MockBean
+    private UserDetailsService userDetailsService;
 
     @Test
     void register_validRequest_returns201() throws Exception {
