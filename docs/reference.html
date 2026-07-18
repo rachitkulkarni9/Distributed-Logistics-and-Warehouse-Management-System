@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DLWMS — Interview Reference</title>
+<style>
+  :root {
+    --bg:        #ECF3FB;
+    --bg2:       #FFFFFF;
+    --bg3:       #DDE8F5;
+    --nav-bg:    #0A1628;
+    --nav-text:  #8AACCF;
+    --nav-active:#2E86C1;
+    --fg:        #0D1F33;
+    --fg2:       #3A5472;
+    --fg3:       #6A8BAD;
+    --accent:    #1A6FAA;
+    --accent2:   #E8990A;
+    --accent2-bg:#FFF8E7;
+    --border:    #C8DCED;
+    --code-bg:   #EBF2F9;
+    --chip-bg:   #D6E8F7;
+    --chip-fg:   #0E4C78;
+    --tag-bg:    #FFF0CC;
+    --tag-fg:    #7A4F00;
+    --good-bg:   #E5F7EE;
+    --good-fg:   #0F6B38;
+    --radius:    6px;
+    --shadow:    0 1px 4px rgba(10,22,40,0.10);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:        #0A1628;
+      --bg2:       #101F35;
+      --bg3:       #172740;
+      --nav-bg:    #060E1A;
+      --nav-text:  #5A82AA;
+      --nav-active:#4DA3DE;
+      --fg:        #D8EAF8;
+      --fg2:       #8AACCF;
+      --fg3:       #4E7299;
+      --accent:    #4DA3DE;
+      --accent2:   #F0B429;
+      --accent2-bg:#1E1500;
+      --border:    #1E3553;
+      --code-bg:   #0E1E32;
+      --chip-bg:   #0D2A45;
+      --chip-fg:   #7BBFE8;
+      --tag-bg:    #1E1400;
+      --tag-fg:    #FCBE45;
+      --good-bg:   #0A1E12;
+      --good-fg:   #4DCE87;
+      --shadow:    0 1px 6px rgba(0,0,0,0.4);
+    }
+  }
+  :root[data-theme="light"] {
+    --bg:#ECF3FB;--bg2:#FFFFFF;--bg3:#DDE8F5;--nav-bg:#0A1628;--nav-text:#8AACCF;--nav-active:#2E86C1;
+    --fg:#0D1F33;--fg2:#3A5472;--fg3:#6A8BAD;--accent:#1A6FAA;--accent2:#E8990A;--accent2-bg:#FFF8E7;
+    --border:#C8DCED;--code-bg:#EBF2F9;--chip-bg:#D6E8F7;--chip-fg:#0E4C78;
+    --tag-bg:#FFF0CC;--tag-fg:#7A4F00;--good-bg:#E5F7EE;--good-fg:#0F6B38;--shadow:0 1px 4px rgba(10,22,40,0.10);
+  }
+  :root[data-theme="dark"] {
+    --bg:#0A1628;--bg2:#101F35;--bg3:#172740;--nav-bg:#060E1A;--nav-text:#5A82AA;--nav-active:#4DA3DE;
+    --fg:#D8EAF8;--fg2:#8AACCF;--fg3:#4E7299;--accent:#4DA3DE;--accent2:#F0B429;--accent2-bg:#1E1500;
+    --border:#1E3553;--code-bg:#0E1E32;--chip-bg:#0D2A45;--chip-fg:#7BBFE8;
+    --tag-bg:#1E1400;--tag-fg:#FCBE45;--good-bg:#0A1E12;--good-fg:#4DCE87;--shadow:0 1px 6px rgba(0,0,0,0.4);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--fg);font-size:15px;line-height:1.7;display:flex;min-height:100vh}
+  nav{width:230px;min-width:230px;background:var(--nav-bg);position:sticky;top:0;height:100vh;overflow-y:auto;padding:0 0 32px;flex-shrink:0}
+  .nav-header{padding:20px 18px 14px;border-bottom:1px solid rgba(255,255,255,0.06);margin-bottom:8px}
+  .nav-header .eyebrow{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#3A6080;font-weight:600;margin-bottom:4px}
+  .nav-header h1{font-size:13.5px;font-weight:700;color:#C8DCED;line-height:1.3;text-wrap:balance}
+  nav a{display:block;padding:5px 18px;font-size:12.5px;color:var(--nav-text);text-decoration:none;border-left:2px solid transparent;transition:color .15s,border-color .15s,background .15s}
+  nav a:hover{color:#C8DCED;background:rgba(255,255,255,0.04)}
+  nav a.active{color:var(--nav-active);border-left-color:var(--nav-active);background:rgba(46,134,193,0.10)}
+  .nav-section-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#2A4A66;font-weight:700;padding:14px 18px 4px}
+  .theme-toggle{display:flex;align-items:center;gap:8px;padding:12px 18px 0;margin-top:16px;border-top:1px solid rgba(255,255,255,0.06)}
+  .theme-toggle button{background:rgba(255,255,255,0.07);border:none;color:var(--nav-text);font-size:11px;padding:4px 10px;border-radius:4px;cursor:pointer;transition:background .15s}
+  .theme-toggle button:hover{background:rgba(255,255,255,0.14)}
+  main{flex:1;min-width:0;padding:36px 48px 80px;max-width:920px}
+  .page-header{margin-bottom:40px;padding-bottom:28px;border-bottom:2px solid var(--border)}
+  .page-header .kicker{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:8px}
+  .page-header h2{font-size:28px;font-weight:800;color:var(--fg);line-height:1.2;text-wrap:balance;margin-bottom:10px}
+  .page-header p{color:var(--fg2);font-size:15.5px;max-width:640px}
+  .stack-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+  .pill{font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:20px;background:var(--chip-bg);color:var(--chip-fg);font-family:'SF Mono','Consolas','Menlo',monospace}
+  .pill.amber{background:var(--tag-bg);color:var(--tag-fg)}
+  section{margin-bottom:52px;scroll-margin-top:24px}
+  h3{font-size:19px;font-weight:800;color:var(--fg);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+  h3 .icon{width:26px;height:26px;background:var(--accent);border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+  h4{font-size:14px;font-weight:700;color:var(--fg2);text-transform:uppercase;letter-spacing:.07em;margin:24px 0 10px}
+  p{margin-bottom:12px;color:var(--fg)}
+  p:last-child{margin-bottom:0}
+  .card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;margin-bottom:16px;box-shadow:var(--shadow)}
+  .card-title{font-size:14.5px;font-weight:700;color:var(--fg);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+  .card-title .badge{font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:20px;letter-spacing:.05em}
+  .badge-blue{background:var(--chip-bg);color:var(--chip-fg)}
+  .badge-amber{background:var(--tag-bg);color:var(--tag-fg)}
+  .badge-green{background:var(--good-bg);color:var(--good-fg)}
+  .card p{color:var(--fg2);font-size:14px;margin-bottom:0}
+  .service-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:28px}
+  .service-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+  .service-card .svc-name{font-size:13.5px;font-weight:700;color:var(--fg);margin-bottom:3px}
+  .service-card .svc-port{font-family:'SF Mono','Consolas',monospace;font-size:11px;color:var(--accent);margin-bottom:8px}
+  .service-card .svc-desc{font-size:13px;color:var(--fg2);line-height:1.5}
+  .table-wrap{overflow-x:auto;margin-bottom:20px;border-radius:var(--radius);border:1px solid var(--border)}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  thead th{background:var(--bg3);color:var(--fg2);font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:9px 14px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+  tbody tr{border-bottom:1px solid var(--border)}
+  tbody tr:last-child{border-bottom:none}
+  tbody tr:hover{background:var(--bg3)}
+  td{padding:9px 14px;color:var(--fg);vertical-align:top}
+  td:first-child{font-family:'SF Mono','Consolas',monospace;font-size:12.5px;color:var(--accent);white-space:nowrap}
+  td code{font-family:'SF Mono','Consolas',monospace;font-size:12px;background:var(--code-bg);padding:1px 5px;border-radius:3px;color:var(--accent)}
+  pre{background:var(--code-bg);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;font-family:'SF Mono','Consolas','Menlo',monospace;font-size:12.5px;line-height:1.65;overflow-x:auto;color:var(--fg);margin-bottom:16px}
+  code{font-family:'SF Mono','Consolas','Menlo',monospace;font-size:12.5px;background:var(--code-bg);padding:1px 6px;border-radius:3px;color:var(--accent)}
+  .hl-comment{color:var(--fg3)}
+  .callout{border-left:3px solid var(--accent2);background:var(--accent2-bg);border-radius:0 var(--radius) var(--radius) 0;padding:12px 16px;margin-bottom:16px;font-size:14px;color:var(--fg)}
+  .callout strong{color:var(--accent2)}
+  .callout.info{border-left-color:var(--accent);background:var(--code-bg)}
+  .callout.info strong{color:var(--accent)}
+  .callout.good{border-left-color:var(--good-fg);background:var(--good-bg)}
+  .callout.good strong{color:var(--good-fg)}
+  .saga-flow{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:20px}
+  .saga-flow-header{background:var(--bg3);padding:10px 16px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--fg2);border-bottom:1px solid var(--border)}
+  .saga-step{display:flex;align-items:flex-start;gap:14px;padding:12px 16px;border-bottom:1px solid var(--border)}
+  .saga-step:last-child{border-bottom:none}
+  .saga-num{width:22px;height:22px;min-width:22px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;margin-top:2px}
+  .saga-num.comp{background:var(--accent2)}
+  .saga-body{flex:1}
+  .saga-body strong{font-size:13.5px;color:var(--fg);display:block;margin-bottom:3px}
+  .saga-body span{font-size:12.5px;color:var(--fg2)}
+  .saga-topic{display:inline-block;font-family:'SF Mono','Consolas',monospace;font-size:11.5px;background:var(--chip-bg);color:var(--chip-fg);padding:1px 7px;border-radius:3px;margin-top:4px}
+  .saga-topic.fail{background:var(--tag-bg);color:var(--tag-fg)}
+  .pattern-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:20px}
+  .pattern-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px}
+  .pattern-name{font-size:13px;font-weight:700;color:var(--accent);margin-bottom:4px}
+  .pattern-where{font-size:11.5px;color:var(--accent2);font-weight:600;margin-bottom:5px;font-family:'SF Mono','Consolas',monospace}
+  .pattern-desc{font-size:13px;color:var(--fg2);line-height:1.5}
+  .method{display:inline-block;font-family:'SF Mono','Consolas',monospace;font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:3px;margin-right:6px}
+  .GET{background:#D4EDDA;color:#155724}
+  .POST{background:#CCE5FF;color:#004085}
+  .PUT{background:#FFF3CD;color:#856404}
+  .DEL{background:#F8D7DA;color:#721c24}
+  :root[data-theme="dark"] .GET{background:#0A2E14;color:#5ECB82}
+  :root[data-theme="dark"] .POST{background:#072040;color:#60AEFF}
+  :root[data-theme="dark"] .PUT{background:#1E1500;color:#F0C040}
+  :root[data-theme="dark"] .DEL{background:#2A0808;color:#FF7070}
+  @media (prefers-color-scheme:dark){.GET{background:#0A2E14;color:#5ECB82}.POST{background:#072040;color:#60AEFF}.PUT{background:#1E1500;color:#F0C040}.DEL{background:#2A0808;color:#FF7070}}
+  .endpoint-list{list-style:none;margin-bottom:16px}
+  .endpoint-list li{display:flex;align-items:baseline;padding:6px 0;border-bottom:1px solid var(--border);font-size:13.5px}
+  .endpoint-list li:last-child{border-bottom:none}
+  .endpoint-path{font-family:'SF Mono','Consolas',monospace;font-size:12.5px;color:var(--fg);flex:1}
+  .endpoint-note{font-size:12px;color:var(--fg2);margin-left:10px}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+  .kafka-row{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+  .kafka-item{display:flex;align-items:flex-start;gap:12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px}
+  .kafka-dir{font-size:10px;font-weight:800;letter-spacing:.08em;padding:3px 8px;border-radius:3px;flex-shrink:0;align-self:flex-start;margin-top:1px}
+  .kafka-prod{background:var(--good-bg);color:var(--good-fg)}
+  .kafka-cons{background:var(--chip-bg);color:var(--chip-fg)}
+  .kafka-body strong{font-family:'SF Mono','Consolas',monospace;font-size:12px;color:var(--fg);display:block;margin-bottom:2px}
+  .kafka-body span{font-size:12.5px;color:var(--fg2)}
+  @media (max-width:820px){nav{display:none}main{padding:24px 20px 60px}.two-col{grid-template-columns:1fr}.pattern-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav id="sidebar">
+  <div class="nav-header">
+    <div class="eyebrow">Project Reference</div>
+    <h1>Distributed Logistics &amp; Warehouse Mgmt</h1>
+  </div>
+  <div class="nav-section-label">Overview</div>
+  <a href="#overview">System Overview</a>
+  <a href="#stack">Tech Stack</a>
+  <a href="#architecture">Architecture</a>
+  <div class="nav-section-label">Services</div>
+  <a href="#gateway">API Gateway</a>
+  <a href="#auth">Auth Service</a>
+  <a href="#order">Order Service</a>
+  <a href="#inventory">Inventory Service</a>
+  <a href="#shipment">Shipment Service</a>
+  <a href="#warehouse">Warehouse Service</a>
+  <a href="#notification">Notification Service</a>
+  <a href="#analytics">Analytics Service</a>
+  <a href="#common">Common Module</a>
+  <div class="nav-section-label">Deep Dives</div>
+  <a href="#saga">Order Saga Flow</a>
+  <a href="#patterns">Design Patterns</a>
+  <a href="#infra">Infrastructure &amp; CI/CD</a>
+  <a href="#interview">Interview Q&amp;A</a>
+  <div class="theme-toggle">
+    <button onclick="setTheme('light')">Light</button>
+    <button onclick="setTheme('dark')">Dark</button>
+  </div>
+</nav>
+
+<main>
+  <div class="page-header">
+    <div class="kicker">Interview Preparation Reference</div>
+    <h2>Distributed Logistics &amp; Warehouse Management System</h2>
+    <p>A production-grade Java 21 microservices platform for end-to-end logistics operations — order fulfillment, inventory, shipment tracking, and real-time analytics.</p>
+    <div class="stack-pills">
+      <span class="pill">Java 21</span>
+      <span class="pill">Spring Boot 3.2</span>
+      <span class="pill">Spring Cloud Gateway</span>
+      <span class="pill">Apache Kafka</span>
+      <span class="pill">PostgreSQL 16</span>
+      <span class="pill">Redis 7</span>
+      <span class="pill">Docker / Kubernetes</span>
+      <span class="pill amber">AWS ECS · ECR · RDS · MSK</span>
+    </div>
+  </div>
+
+  <section id="overview">
+    <h3><span class="icon">📦</span> System Overview</h3>
+    <p>Eight independently deployable Spring Boot microservices expose REST APIs through a single Spring Cloud Gateway entry point and communicate asynchronously via Apache Kafka. All services share a PostgreSQL 16 instance in development (one schema per service domain) and Redis 7 for caching and token management.</p>
+    <div class="service-grid">
+      <div class="service-card"><div class="svc-name">API Gateway</div><div class="svc-port">:8080</div><div class="svc-desc">Single entry point. JWT validation at edge, routing, circuit breakers, rate limiting.</div></div>
+      <div class="service-card"><div class="svc-name">Auth Service</div><div class="svc-port">:8081</div><div class="svc-desc">Registration, login, JWT issuance &amp; refresh, token blacklisting via Redis.</div></div>
+      <div class="service-card"><div class="svc-name">Order Service</div><div class="svc-port">:8082</div><div class="svc-desc">Order lifecycle management. Saga initiator — publishes <code>order-created</code> to Kafka.</div></div>
+      <div class="service-card"><div class="svc-name">Inventory Service</div><div class="svc-port">:8083</div><div class="svc-desc">Stock tracking &amp; reservation. Pessimistic locking, Redis caching, saga participant.</div></div>
+      <div class="service-card"><div class="svc-name">Shipment Service</div><div class="svc-port">:8084</div><div class="svc-desc">Shipment creation &amp; tracking. Reacts to inventory events, publishes dispatch/delivery events.</div></div>
+      <div class="service-card"><div class="svc-name">Warehouse Service</div><div class="svc-port">:8085</div><div class="svc-desc">Warehouse &amp; storage location master data. Reference data with Redis caching.</div></div>
+      <div class="service-card"><div class="svc-name">Notification Service</div><div class="svc-port">:8086</div><div class="svc-desc">Email/SMS dispatch. Pure Kafka consumer with full audit log. No synchronous callers.</div></div>
+      <div class="service-card"><div class="svc-name">Analytics Service</div><div class="svc-port">:8087</div><div class="svc-desc">Daily metric aggregation from Kafka event stream. Pre-computed read model for dashboards.</div></div>
+    </div>
+  </section>
+
+  <section id="stack">
+    <h3><span class="icon">⚙</span> Tech Stack</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Concern</th><th>Choice</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Language</td><td>Java 21</td><td>Virtual threads available; records, pattern matching</td></tr>
+          <tr><td>Framework</td><td>Spring Boot 3.2</td><td>Spring Security 6, Spring Data JPA, Spring WebFlux (gateway only)</td></tr>
+          <tr><td>Build</td><td>Maven multi-module</td><td>Parent pom.xml; common lib shared across all services</td></tr>
+          <tr><td>Gateway</td><td>Spring Cloud Gateway</td><td>Reactive/WebFlux; programmatic routes; Resilience4j circuit breakers</td></tr>
+          <tr><td>Auth</td><td>Spring Security + JJWT</td><td>Stateless JWT; BCrypt strength 12; refresh token rotation</td></tr>
+          <tr><td>Database</td><td>PostgreSQL 16</td><td>One schema per service in dev; separate RDS instances in prod</td></tr>
+          <tr><td>Cache / Blacklist</td><td>Redis 7</td><td>Token blacklist, rate limiting, @Cacheable on hot reads</td></tr>
+          <tr><td>Messaging</td><td>Apache Kafka 3.6</td><td>Confluent images; choreography saga; dead-letter topics</td></tr>
+          <tr><td>API Docs</td><td>SpringDoc OpenAPI 3</td><td>Swagger UI aggregated at gateway</td></tr>
+          <tr><td>Observability</td><td>Micrometer + Prometheus + Grafana</td><td>All services expose /actuator/prometheus</td></tr>
+          <tr><td>Containers</td><td>Docker + Docker Compose</td><td>14 containers; health-check-based startup ordering</td></tr>
+          <tr><td>CI/CD</td><td>GitHub Actions</td><td>Matrix build, Trivy security scan, ECR push, ECS deploy</td></tr>
+          <tr><td>Cloud target</td><td>AWS</td><td>ECS Fargate · ECR · RDS · ElastiCache · MSK</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="architecture">
+    <h3><span class="icon">🏗</span> Architecture</h3>
+    <div class="callout info"><strong>Pattern:</strong> Choreography-based Saga. No central orchestrator — each service reacts to Kafka events and publishes its own. A shared <code>correlationId</code> (UUID generated at order creation) ties all events together for distributed tracing.</div>
+    <pre><span class="hl-comment">┌─────────────────────────────────────────────────────────────┐
+│                        Client (HTTP)                        │
+└───────────────────────────┬─────────────────────────────────┘
+                            │ :8080
+                    ┌───────▼────────┐
+                    │  API Gateway   │  JWT validation, routing,
+                    │  (WebFlux)     │  circuit breakers, rate limit
+                    └──┬──┬──┬──┬───┘
+                       │  │  │  │  (HTTP lb://)
+          ┌────────────┘  │  │  └─────────────┐
+          ▼               ▼  ▼                ▼
+    :8081 Auth      :8082 Order   :8083 Inv   :8087 Analytics
+    :8085 Warehouse :8084 Shipment :8086 Notif
+
+         ────────── Apache Kafka ──────────
+  order-created ──► inventory-reserved ──► shipment-created
+                └──► inventory-failed        └──► shipment-dispatched
+                                             └──► shipment-delivered
+                         └──────────► notification-events
+
+         ────────── PostgreSQL (7 schemas) + Redis ──────────</span></pre>
+
+    <h4>Kafka Topics</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Topic</th><th>Producer</th><th>Consumers</th></tr></thead>
+        <tbody>
+          <tr><td>order-created</td><td>Order Svc</td><td>Inventory Svc, Analytics Svc</td></tr>
+          <tr><td>inventory-reserved</td><td>Inventory Svc</td><td>Order Svc, Shipment Svc</td></tr>
+          <tr><td>inventory-failed</td><td>Inventory Svc</td><td>Order Svc (compensation)</td></tr>
+          <tr><td>shipment-created</td><td>Shipment Svc</td><td>Analytics Svc</td></tr>
+          <tr><td>shipment-dispatched</td><td>Shipment Svc</td><td>Notification Svc</td></tr>
+          <tr><td>shipment-delivered</td><td>Shipment Svc</td><td>Order Svc, Notification Svc, Analytics Svc</td></tr>
+          <tr><td>notification-events</td><td>Various</td><td>Notification Svc</td></tr>
+          <tr><td>*.DLT</td><td>Spring Kafka retry</td><td>Dead-letter — manual review</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Redis Usage by Service</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Service</th><th>Usage</th><th>Key Pattern</th></tr></thead>
+        <tbody>
+          <tr><td>Auth</td><td>Access token blacklist with natural TTL</td><td><code>blacklist:&lt;token&gt;</code></td></tr>
+          <tr><td>API Gateway</td><td>Rate limiting per client IP</td><td>Gateway-managed keys</td></tr>
+          <tr><td>Inventory</td><td>@Cacheable SKU lookups</td><td><code>inventory::&lt;sku&gt;</code></td></tr>
+          <tr><td>Warehouse</td><td>@Cacheable warehouse by ID</td><td><code>warehouses::&lt;id&gt;</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="gateway">
+    <h3><span class="icon">🚪</span> API Gateway</h3>
+    <div class="callout info"><strong>Port 8080 · Spring Cloud Gateway (WebFlux) · Resilience4j · Redis</strong></div>
+    <p>Single entry point for all client traffic. Validates JWTs once at the edge, decodes claims, and forwards them as trusted headers — downstream services never re-validate tokens.</p>
+    <h4>Routes</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Route</th><th>Path Pattern</th><th>JWT?</th><th>Circuit Breaker</th></tr></thead>
+        <tbody>
+          <tr><td>auth-service</td><td>/api/v1/auth/**, /api/v1/users/**</td><td>No</td><td>auth-cb</td></tr>
+          <tr><td>order-service</td><td>/api/v1/orders/**</td><td>Yes</td><td>order-cb</td></tr>
+          <tr><td>inventory-service</td><td>/api/v1/inventory/**</td><td>Yes</td><td>inventory-cb</td></tr>
+          <tr><td>shipment-service</td><td>/api/v1/shipments/**</td><td>Yes</td><td>shipment-cb</td></tr>
+          <tr><td>warehouse-service</td><td>/api/v1/warehouses/**</td><td>Yes</td><td>warehouse-cb</td></tr>
+          <tr><td>analytics-service</td><td>/api/v1/analytics/**</td><td>Yes</td><td>analytics-cb</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h4>Circuit Breaker (Resilience4j)</h4>
+    <pre>slidingWindowSize: 10  failureRateThreshold: 50%  waitDurationInOpenState: 10s  permittedCallsInHalfOpen: 3</pre>
+    <h4>Public Paths (bypass JWT)</h4>
+    <pre>/api/v1/auth/login  /api/v1/auth/register  /api/v1/auth/refresh
+/actuator/health    /swagger-ui/**          /v3/api-docs/**</pre>
+  </section>
+
+  <section id="auth">
+    <h3><span class="icon">🔐</span> Auth Service</h3>
+    <div class="callout info"><strong>Port 8081 · PostgreSQL schema: auth · Redis (token blacklist)</strong></div>
+    <h4>Entities</h4>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">User <span class="badge badge-blue">auth.users</span></div>
+        <pre style="font-size:11.5px;margin-top:8px">id           UUID (PK)
+email        VARCHAR(255) UNIQUE
+passwordHash VARCHAR (BCrypt-12)
+firstName    VARCHAR(100)
+lastName     VARCHAR(100)
+phone        VARCHAR(30)
+role         ENUM (5 roles)
+enabled      BOOLEAN
+createdAt    Instant (immutable)
+updatedAt    Instant</pre>
+      </div>
+      <div class="card">
+        <div class="card-title">RefreshToken <span class="badge badge-blue">auth.refresh_tokens</span></div>
+        <pre style="font-size:11.5px;margin-top:8px">id        UUID (PK)
+token     VARCHAR(512) UNIQUE
+user      → User (FK)
+expiresAt Instant (7 days)
+revoked   BOOLEAN
+createdAt Instant (@PrePersist)</pre>
+      </div>
+    </div>
+    <h4>User Roles</h4>
+    <div class="stack-pills" style="margin-bottom:16px">
+      <span class="pill">ROLE_ADMIN</span><span class="pill">ROLE_MANAGER</span><span class="pill">ROLE_WAREHOUSE_STAFF</span><span class="pill">ROLE_DRIVER</span><span class="pill">ROLE_CUSTOMER</span>
+    </div>
+    <h4>Endpoints</h4>
+    <ul class="endpoint-list">
+      <li><span class="method POST">POST</span><span class="endpoint-path">/api/v1/auth/register</span><span class="endpoint-note">Register → AuthResponse (access + refresh tokens)</span></li>
+      <li><span class="method POST">POST</span><span class="endpoint-path">/api/v1/auth/login</span><span class="endpoint-note">Login → AuthResponse</span></li>
+      <li><span class="method POST">POST</span><span class="endpoint-path">/api/v1/auth/refresh</span><span class="endpoint-note">?refreshToken=… → AuthResponse (token rotated)</span></li>
+      <li><span class="method POST">POST</span><span class="endpoint-path">/api/v1/auth/logout</span><span class="endpoint-note">Blacklists access token in Redis, revokes all refresh tokens</span></li>
+      <li><span class="method GET">GET</span><span class="endpoint-path">/api/v1/users/me</span><span class="endpoint-note">Current user profile via X-User-Id header</span></li>
+    </ul>
+    <h4>JWT Details</h4>
+    <pre>Access token TTL: 1 hour   Refresh token TTL: 7 days
+Claims: sub=userId, email, role, name   Signing: HMAC-SHA (JJWT)
+Logout blacklist: Redis key "blacklist:&lt;token&gt;" with matching TTL</pre>
+    <div class="callout good"><strong>Refresh Token Rotation:</strong> Old refresh token revoked on use, new pair issued — prevents replay attacks.</div>
+    <div class="callout"><strong>Token Blacklist:</strong> Redis TTL mirrors remaining token validity — expired entries self-clean, no cron job needed.</div>
+  </section>
+
+  <section id="order">
+    <h3><span class="icon">📋</span> Order Service</h3>
+    <div class="callout info"><strong>Port 8082 · PostgreSQL schema: orders · Kafka producer + consumer</strong></div>
+    <p>Creates and manages the order lifecycle. The <strong>saga initiator</strong> — fires <code>order-created</code> and reacts to inventory outcome events to update status or trigger compensation.</p>
+    <h4>Order Entity (orders.orders)</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>id</td><td>UUID</td><td>PK</td></tr>
+          <tr><td>orderNumber</td><td>VARCHAR(30)</td><td>Unique human-readable via OrderNumberGenerator</td></tr>
+          <tr><td>customerId</td><td>String</td><td>From JWT header X-User-Id, indexed</td></tr>
+          <tr><td>customerEmail</td><td>String</td><td></td></tr>
+          <tr><td>status</td><td>OrderStatus ENUM</td><td>PENDING → INVENTORY_RESERVED → SHIPPED → DELIVERED / CANCELLED</td></tr>
+          <tr><td>lineItems</td><td>List&lt;OrderLineItem&gt;</td><td>OneToMany, cascade ALL</td></tr>
+          <tr><td>totalAmount</td><td>BigDecimal(12,2)</td><td></td></tr>
+          <tr><td>shippingAddress</td><td>5× String fields</td><td>street, city, state, postalCode, country (denormalized)</td></tr>
+          <tr><td>trackingNumber</td><td>String</td><td>Set when shipment is created</td></tr>
+          <tr><td>correlationId</td><td>String</td><td>UUID — threads through all saga events</td></tr>
+          <tr><td>createdAt / updatedAt</td><td>Instant</td><td>JPA Auditing</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h4>Order Status Flow</h4>
+    <pre>PENDING ──► INVENTORY_RESERVED ──► PROCESSING ──► SHIPPED ──► DELIVERED
+   └──────────────────────────────────────────────────────────► CANCELLED</pre>
+    <h4>Endpoints</h4>
+    <ul class="endpoint-list">
+      <li><span class="method POST">POST</span><span class="endpoint-path">/api/v1/orders</span><span class="endpoint-note">Create order → 201, publishes order-created to Kafka</span></li>
+      <li><span class="method GET">GET</span><span class="endpoint-path">/api/v1/orders</span><span class="endpoint-note">List all orders, paginated (sorted by createdAt desc)</span></li>
+      <li><span class="method GET">GET</span><span class="endpoint-path">/api/v1/orders/{id}</span><span class="endpoint-note">Get order by UUID</span></li>
+      <li><span class="method PUT">PUT</span><span class="endpoint-path">/api/v1/orders/{id}/cancel</span><span class="endpoint-note">Cancel — guard: cannot cancel SHIPPED or DELIVERED</span></li>
+      <li><span class="method GET">GET</span><span class="endpoint-path">/api/v1/orders/{id}/status</span><span class="endpoint-note">Return just the status string</span></li>
+    </ul>
+    <h4>Kafka</h4>
+    <div class="kafka-row">
+      <div class="kafka-item"><span class="kafka-dir kafka-prod">PRODUCES</span><div class="kafka-body"><strong>order-created</strong><span>Key: orderId. Payload: OrderCreatedEvent with line items, address, correlationId.</span></div></div>
+      <div class="kafka-item"><span class="kafka-dir kafka-cons">CONSUMES</span><div class="kafka-body"><strong>inventory-reserved</strong><span>Updates order status to INVENTORY_RESERVED.</span></div></div>
+      <div class="kafka-item"><span class="kafka-dir kafka-cons">CONSUMES</span><div class="kafka-body"><strong>inventory-failed</strong><span>Saga compensation — updates order to CANCELLED.</span></div></div>
+    </div>
+  </section>
+
+  <section id="inventory">
+    <h3><span class="icon">📦</span> Inventory Service</h3>
+    <div class="callout info"><strong>Port 8083 · PostgreSQL schema: inventory · Redis cache · Kafka producer + consumer</strong></div>
+    <p>Manages stock levels. Atomically reserves stock using pessimistic locking. Publishes success or failure to continue or compensate the saga.</p>
+    <h4>InventoryItem Entity (inventory.inventory_items)</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>id</td><td>UUID</td><td>PK</td></tr>
+          <tr><td>sku</td><td>VARCHAR(100)</td><td>UNIQUE, indexed</td></tr>
+          <tr><td>quantityOnHand</td><td>int</td><td>Physical stock</td></tr>
+          <tr><td>quantityReserved</td><td>int</td><td>Held for pending orders</td></tr>
+          <tr><td>reorderPoint</td><td>int</td><td>Alert threshold, default 10</td></tr>
+          <tr><td>reorderQuantity</td><td>int</td><td>Auto-reorder amount, default 50</td></tr>
+          <tr><td>unitCost</td><td>BigDecimal(10,2)</td><td></td></tr>
+          <tr><td>warehouseId</td><td>String</td><td>Logical FK to Warehouse</td></tr>
+          <tr><td>locationCode</td><td>String</td><td>Shelf/bin location</td></tr>
+          <tr><td>status</td><td>InventoryStatus ENUM</td><td>AVAILABLE / LOW_STOCK / OUT_OF_STOCK / DISCONTINUED</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout info"><strong>Computed:</strong> <code>getQuantityAvailable() = quantityOnHand − quantityReserved</code></div>
+    <h4>Endpoints</h4>
+    <ul class="endpoint-list">
+      <li><span class="method GET">GET</span><span class="endpoint-path">/api/v1/inventory</span><span class="endpoint-note">List all items, paginated, sorted by SKU</span></li>
+      <li><span class="method GET">GET</span><span class="endpoint-path">/api/v1/inventory/{sku}</span><span class="endpoint-note">Get item by SKU — Redis @Cacheable</span></li>
+      <li><span class="method POST">POST</span><span class="endpoint-path">/api/v1/inventory</span><span class="endpoint-note">Create item — validates no duplicate SKU</span></li>
+      <li><span class="method PUT">PUT</span><span class="endpoint-path">/api/v1/inventory/{id}</span><span class="endpoint-note">Update stock levels — @CacheEvict on update</span></li>
+    </ul>
+    <h4>Kafka</h4>
+    <div class="kafka-row">
+      <div class="kafka-item"><span class="kafka-dir kafka-cons">CONSUMES</span><div class="kafka-body"><strong>order-created</strong><span>@RetryableTopic: 3 attempts, exponential backoff (1s, 2×), DLT. Uses findBySkuForUpdate (pessimistic lock) per line item.</span></div></div>
+      <div class="kafka-item"><span class="kafka-dir kafka-prod">PRODUCES</span><div class="kafka-body"><strong>inventory-reserved</strong><span>Key: orderId. Includes warehouseId and reserved quantities per SKU.</span></div></div>
+      <div class="kafka-item"><span class="kafka-dir kafka-prod">PRODUCES</span><div class="kafka-body"><strong>inventory-failed</strong><span>Key: orderId. Includes failed SKUs with requested vs available quantities.</span></div></div>
+    </div>
+  </section>
+
+  <section id="shipment">
+    <h3><span class="icon">🚚</span> Shipment Service</h3>
+    <div class="callout info"><strong>Port 8084 · PostgreSQL schema: shipments · Kafka producer + consumer</strong></div>
+    <h4>Shipment Entity (shipments.shipments)</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>id</td><td>UUID</td><td>PK</td></tr>
+          <tr><td>orderId</td><td>UUID</td><td>From triggering event, indexed</td></tr>
+          <tr><td>trackingNumber</td><td>VARCHAR(50)</td><td>UNIQUE, via TrackingNumberGenerator</td></tr>
+          <tr><td>carrier</td><td>VARCHAR(100)</td><td>"LogiExpress" (TODO: carrier rules engine)</td></tr>
+          <tr><td>status</td><td>ShipmentStatus ENUM</td><td>CREATED → DISPATCHED → DELIVERED</td></tr>
+          <tr><td>originWarehouseId</td><td>String</td><td>From InventoryReservedEvent</td></tr>
+          <tr><td>estimatedDeliveryDate</td><td>LocalDate</td><td>now() + 5 days</td></tr>
+          <tr><td>dispatchedAt / deliveredAt</td><td>Instant</td><td>Set on status transition</td></tr>
+          <tr><td>correlationId</td><td>String</td><td>Propagated through saga</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h4>Endpoints</h4>
+    <ul class="endpoint-list">
+      <li><span class="method GET">GET</span><span class="endpoint-path">/api/v1/shipments/{id}</span><span class="endpoint-note">Get shipment by UUID</span></li>
+      <li><span class="method GET">GET</span><span class="endpoint-path">/api/v1/shipments/track/{trackingNumber}</span><span class="endpoint-note">Track by tracking number</span></li>
+      <li><span class="method PUT">PUT</span><span class="endpoint-path">/api/v1/shipments/{id}/dispatch</span><span class="endpoint-note">Mark DISPATCHED → publishes shipment-dispatched</span></li>
+      <li><span class="method PUT">PUT</span><span class="endpoint-path">/api/v1/shipments/{id}/deliver</span><span class="endpoint-note">Mark DELIVERED → publishes shipment-delivered</span></li>
+    </ul>
+    <h4>Kafka</h4>
+    <div class="kafka-row">
+      <div class="kafka-item"><span class="kafka-dir kafka-cons">CONSUMES</span><div class="kafka-body"><strong>inventory-reserved</strong><span>Creates Shipment entity, saves to DB, publishes shipment-created.</span></div></div>
+      <div class="kafka-item"><span class="kafka-dir kafka-prod">PRODUCES</span><div class="kafka-body"><strong>shipment-created · shipment-dispatched · shipment-delivered</strong><span>Each carries shipmentId, orderId, trackingNumber, carrier, correlationId.</span></div></div>
+    </div>
+  </section>
+
+  <section id="warehouse">
+    <h3><span class="icon">🏭</span> Warehouse Service</h3>
+    <div class="callout info"><strong>Port 8085 · PostgreSQL schema: warehouses · Redis cache · No Kafka</strong></div>
+    <p>Manages warehouse master data and their internal storage location/bin hierarchy. Reference data — frequently read, rarely written, Redis-cached.</p>
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">Warehouse <span class="badge badge-blue">warehouses.warehouses</span></div>
+        <pre style="font-size:11.5px;margin-top:8px">id            UUID (PK)
+code          VARCHAR(20) UNIQUE
+name          VARCHAR(255)
+address       street/city/state/postal/country
+totalCapacity int (default 1000)
+usedCapacity  int (default 0)
+active        boolean</pre>
+      </div>
+      <div class="card">
+        <div class="card-title">StorageLocation <span class="badge badge-blue">warehouses.storage_locations</span></div>
+        <pre style="font-size:11.5px;margin-top:8px">id           UUID (PK)
+warehouse    → Warehouse (FK)
+locationCode VARCHAR(30)
+zone         VARCHAR(20) "GENERAL"
+capacity     int (default 100)
+occupied     int (default 0)
+active       boolean</pre>
+      </div>
+    </div>
+    <h4>Endpoints</h4>
+    <ul class="endpoint-list">
+      <li><span class="method GET">GET</span><span class="endpoint-path">/api/v1/warehouses</span><span class="endpoint-note">List warehouses, paginated</span></li>
+      <li><span class="method GET">GET</span><span class="endpoint-path">/api/v1/warehouses/{id}</span><span class="endpoint-note">Get by UUID — @Cacheable("warehouses")</span></li>
+      <li><span class="method POST">POST</span><span class="endpoint-path">/api/v1/warehouses</span><span class="endpoint-note">Create — validates unique code</span></li>
+      <li><span class="method GET">GET</span><span class="endpoint-path">/api/v1/warehouses/{id}/locations</span><span class="endpoint-note">List storage locations for a warehouse</span></li>
+    </ul>
+  </section>
+
+  <section id="notification">
+    <h3><span class="icon">🔔</span> Notification Service</h3>
+    <div class="callout info"><strong>Port 8086 · PostgreSQL schema: notifications · Kafka consumer only</strong></div>
+    <p>Pure event consumer — no service calls it via REST. Dispatches email (JavaMailSender) or SMS (stubbed), persists a full audit log of every send attempt.</p>
+    <h4>NotificationLog Entity (notifications.notification_logs)</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>id</td><td>UUID</td><td>PK</td></tr>
+          <tr><td>recipientId</td><td>String</td><td>User UUID</td></tr>
+          <tr><td>type</td><td>NotificationType ENUM</td><td>EMAIL / SMS</td></tr>
+          <tr><td>status</td><td>VARCHAR(30)</td><td>"SENT" or "FAILED"</td></tr>
+          <tr><td>subject / body</td><td>TEXT</td><td></td></tr>
+          <tr><td>correlationId</td><td>String</td><td>Saga trace ID</td></tr>
+          <tr><td>errorMessage</td><td>String</td><td>Populated if send failed</td></tr>
+          <tr><td>sentAt</td><td>Instant</td><td>Immutable — @CreatedDate</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h4>Kafka Subscriptions</h4>
+    <div class="kafka-row">
+      <div class="kafka-item"><span class="kafka-dir kafka-cons">CONSUMES</span><div class="kafka-body"><strong>notification-events</strong><span>Routes to sendEmail() or sendSms() by NotificationType. Logs every attempt.</span></div></div>
+      <div class="kafka-item"><span class="kafka-dir kafka-cons">CONSUMES</span><div class="kafka-body"><strong>shipment-dispatched</strong><span>TODO: send tracking info email to customer.</span></div></div>
+      <div class="kafka-item"><span class="kafka-dir kafka-cons">CONSUMES</span><div class="kafka-body"><strong>shipment-delivered</strong><span>TODO: send delivery confirmation.</span></div></div>
+    </div>
+    <h4>REST</h4>
+    <ul class="endpoint-list">
+      <li><span class="method GET">GET</span><span class="endpoint-path">/api/v1/notifications?recipientId=&lt;id&gt;</span><span class="endpoint-note">Notification history, paginated, sorted by sentAt desc</span></li>
+    </ul>
+  </section>
+
+  <section id="analytics">
+    <h3><span class="icon">📊</span> Analytics Service</h3>
+    <div class="callout info"><strong>Port 8087 · PostgreSQL schema: analytics · Kafka consumer only</strong></div>
+    <p>Passive Kafka listener that maintains pre-aggregated <strong>daily metric buckets</strong> — one row per day. Dashboard queries hit one table with no joins.</p>
+    <h4>OrderMetric Entity (analytics.order_metrics)</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Field</th><th>Type</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>id</td><td>UUID</td><td>PK</td></tr>
+          <tr><td>metricDate</td><td>LocalDate</td><td>Indexed — one row per calendar day</td></tr>
+          <tr><td>totalOrders</td><td>long</td><td>Incremented on order-created</td></tr>
+          <tr><td>totalRevenue</td><td>BigDecimal(14,2)</td><td>Summed from OrderCreatedEvent.totalAmount</td></tr>
+          <tr><td>shipmentsCreated</td><td>long</td><td>Incremented on shipment-created</td></tr>
+          <tr><td>shipmentsDelivered</td><td>long</td><td>Incremented on shipment-delivered</td></tr>
+          <tr><td>cancelledOrders</td><td>long</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h4>Kafka → getOrCreateMetric(LocalDate.now())</h4>
+    <div class="kafka-row">
+      <div class="kafka-item"><span class="kafka-dir kafka-cons">CONSUMES</span><div class="kafka-body"><strong>order-created · shipment-created · shipment-delivered</strong><span>Find-or-insert today's bucket, increment the appropriate counter.</span></div></div>
+    </div>
+    <h4>REST</h4>
+    <ul class="endpoint-list">
+      <li><span class="method GET">GET</span><span class="endpoint-path">/api/v1/analytics/dashboard?from=YYYY-MM-DD&amp;to=YYYY-MM-DD</span><span class="endpoint-note">Returns list of OrderMetric rows in date range</span></li>
+    </ul>
+  </section>
+
+  <section id="common">
+    <h3><span class="icon">🧩</span> Common Module</h3>
+    <p>Shared library all services depend on. Prevents tight coupling while keeping event contracts consistent.</p>
+    <h4>Kafka Event Payloads (all extend BaseEvent)</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Event Class</th><th>Key Fields</th></tr></thead>
+        <tbody>
+          <tr><td>OrderCreatedEvent</td><td>orderId, customerId, customerEmail, lineItems[], totalAmount, currency, shippingAddress</td></tr>
+          <tr><td>InventoryReservedEvent</td><td>orderId, correlationId, warehouseId, reservedItems[]{sku, quantityReserved, locationCode}</td></tr>
+          <tr><td>InventoryFailedEvent</td><td>orderId, correlationId, reason, failedItems[]{sku, requestedQuantity, availableQuantity}</td></tr>
+          <tr><td>ShipmentCreatedEvent</td><td>shipmentId, orderId, correlationId, trackingNumber, carrier, estimatedDeliveryDate</td></tr>
+          <tr><td>ShipmentDispatchedEvent</td><td>shipmentId, orderId, correlationId, trackingNumber, dispatchedAt, currentLocation</td></tr>
+          <tr><td>ShipmentDeliveredEvent</td><td>shipmentId, orderId, correlationId, trackingNumber, deliveredAt</td></tr>
+          <tr><td>NotificationEvent</td><td>recipientId, recipientEmail, recipientPhone, notificationType, subject, body, correlationId</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h4>Uniform Response Envelope</h4>
+    <pre>{ "success": true, "message": "...", "data": { ... }, "timestamp": "2024-..." }</pre>
+    <h4>Shared Exceptions &amp; Utilities</h4>
+    <div class="stack-pills" style="margin-bottom:12px">
+      <span class="pill">ResourceNotFoundException</span><span class="pill">DuplicateResourceException</span><span class="pill">BusinessRuleException</span><span class="pill">InsufficientInventoryException</span>
+    </div>
+    <div class="stack-pills">
+      <span class="pill">OrderNumberGenerator</span><span class="pill">TrackingNumberGenerator</span><span class="pill">PageUtils</span><span class="pill">JsonUtils</span><span class="pill">GlobalExceptionHandler</span>
+    </div>
+  </section>
+
+  <section id="saga">
+    <h3><span class="icon">🔄</span> Order Fulfillment Saga (Choreography)</h3>
+    <div class="callout"><strong>Pattern: Choreography Saga</strong> — no central orchestrator. Each service reacts to events and publishes its own. The <code>correlationId</code> threads through every event for end-to-end tracing.</div>
+    <div class="saga-flow">
+      <div class="saga-flow-header">Happy Path</div>
+      <div class="saga-step"><div class="saga-num">1</div><div class="saga-body"><strong>Client → POST /api/v1/orders</strong><span>Order Service saves Order(PENDING), generates correlationId</span><div><span class="saga-topic">→ order-created</span></div></div></div>
+      <div class="saga-step"><div class="saga-num">2</div><div class="saga-body"><strong>Inventory Service consumes order-created</strong><span>Pessimistic lock per SKU, reserves stock for all line items</span><div><span class="saga-topic">→ inventory-reserved</span></div></div></div>
+      <div class="saga-step"><div class="saga-num">3a</div><div class="saga-body"><strong>Order Service consumes inventory-reserved</strong><span>Updates order status to INVENTORY_RESERVED</span></div></div>
+      <div class="saga-step"><div class="saga-num">3b</div><div class="saga-body"><strong>Shipment Service consumes inventory-reserved</strong><span>Creates Shipment(CREATED), generates tracking number</span><div><span class="saga-topic">→ shipment-created</span></div></div></div>
+      <div class="saga-step"><div class="saga-num">4</div><div class="saga-body"><strong>PUT /api/v1/shipments/{id}/dispatch</strong><div><span class="saga-topic">→ shipment-dispatched</span></div></div></div>
+      <div class="saga-step"><div class="saga-num">5</div><div class="saga-body"><strong>PUT /api/v1/shipments/{id}/deliver</strong><div><span class="saga-topic">→ shipment-delivered</span></div></div></div>
+      <div class="saga-step"><div class="saga-num">∞</div><div class="saga-body"><strong>Analytics &amp; Notification Services</strong><span>Passively consume events — update daily metrics, send emails/SMS</span></div></div>
+    </div>
+    <div class="saga-flow">
+      <div class="saga-flow-header">Compensation Path (stock unavailable)</div>
+      <div class="saga-step"><div class="saga-num comp">2</div><div class="saga-body"><strong>Inventory Service — stock insufficient</strong><span>Releases partial reservations (compensation)</span><div><span class="saga-topic fail">→ inventory-failed</span></div></div></div>
+      <div class="saga-step"><div class="saga-num comp">3</div><div class="saga-body"><strong>Order Service consumes inventory-failed</strong><span>Updates order to CANCELLED. Saga terminates.</span></div></div>
+    </div>
+  </section>
+
+  <section id="patterns">
+    <h3><span class="icon">🧠</span> Design Patterns Reference</h3>
+    <div class="pattern-grid">
+      <div class="pattern-card"><div class="pattern-name">Choreography Saga</div><div class="pattern-where">order / inventory / shipment</div><div class="pattern-desc">Services react to Kafka events and publish their own — no central orchestrator. Loosely coupled, independently deployable.</div></div>
+      <div class="pattern-card"><div class="pattern-name">Saga Compensation</div><div class="pattern-where">inventory-service</div><div class="pattern-desc">On stock failure, releases partial reservations before publishing inventory-failed. Keeps data consistent without 2PC.</div></div>
+      <div class="pattern-card"><div class="pattern-name">API Gateway Pattern</div><div class="pattern-where">api-gateway</div><div class="pattern-desc">Single entry point — JWT validation once at the edge. Clients talk to one host regardless of internal service count.</div></div>
+      <div class="pattern-card"><div class="pattern-name">Circuit Breaker</div><div class="pattern-where">api-gateway (Resilience4j)</div><div class="pattern-desc">Sliding window (10 req), 50% failure threshold, 10s open state. Prevents cascading failures across services.</div></div>
+      <div class="pattern-card"><div class="pattern-name">Token Relay</div><div class="pattern-where">api-gateway → downstream</div><div class="pattern-desc">Decoded JWT claims forwarded as X-User-Id, X-User-Role headers. Downstream services trust these without re-validating.</div></div>
+      <div class="pattern-card"><div class="pattern-name">Token Blacklist</div><div class="pattern-where">auth-service → Redis</div><div class="pattern-desc">Revoked JWTs stored in Redis with natural expiry TTL. Stateless revocation — no per-request DB lookup.</div></div>
+      <div class="pattern-card"><div class="pattern-name">Refresh Token Rotation</div><div class="pattern-where">auth-service</div><div class="pattern-desc">Old refresh token revoked on use; new pair issued. Prevents replay attacks even if a token is intercepted.</div></div>
+      <div class="pattern-card"><div class="pattern-name">Pessimistic Locking</div><div class="pattern-where">inventory-service</div><div class="pattern-desc">findBySkuForUpdate() acquires row-level DB lock during reservation. Prevents overselling under concurrent order load.</div></div>
+      <div class="pattern-card"><div class="pattern-name">Dead Letter Topic</div><div class="pattern-where">Kafka — all services</div><div class="pattern-desc">*.DLT pattern. @RetryableTopic on inventory: 3 attempts, exponential backoff (1s, 2×), then DLT.</div></div>
+      <div class="pattern-card"><div class="pattern-name">Read-through Cache</div><div class="pattern-where">inventory / warehouse</div><div class="pattern-desc">@Cacheable (Redis) on hot reads. @CacheEvict on writes. Reduces DB load for frequently accessed reference data.</div></div>
+      <div class="pattern-card"><div class="pattern-name">Materialized Read Model</div><div class="pattern-where">analytics-service</div><div class="pattern-desc">Pre-aggregated daily rows built from Kafka events. Dashboard queries hit one table — no joins, no real-time aggregation.</div></div>
+      <div class="pattern-card"><div class="pattern-name">Correlation ID</div><div class="pattern-where">All services</div><div class="pattern-desc">UUID generated at order creation, propagated through every Kafka event. Enables end-to-end distributed tracing.</div></div>
+      <div class="pattern-card"><div class="pattern-name">Schema-per-Service</div><div class="pattern-where">PostgreSQL</div><div class="pattern-desc">7 schemas (auth, orders, inventory, shipments, warehouses, notifications, analytics) for logical isolation in shared Postgres.</div></div>
+      <div class="pattern-card"><div class="pattern-name">Uniform Response Envelope</div><div class="pattern-where">All REST endpoints</div><div class="pattern-desc">ApiResponse&lt;T&gt; wraps every response with success, message, data, timestamp — consistent contract across all services.</div></div>
+    </div>
+  </section>
+
+  <section id="infra">
+    <h3><span class="icon">🚀</span> Infrastructure &amp; CI/CD</h3>
+    <h4>Docker Compose — 14 Containers</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Container</th><th>Image</th><th>Port</th></tr></thead>
+        <tbody>
+          <tr><td>zookeeper</td><td>confluentinc/cp-zookeeper:7.6.0</td><td>2181</td></tr>
+          <tr><td>kafka</td><td>confluentinc/cp-kafka:7.6.0</td><td>9092 / 29092</td></tr>
+          <tr><td>kafka-ui</td><td>provectuslabs/kafka-ui</td><td>8090</td></tr>
+          <tr><td>postgres</td><td>postgres:16-alpine</td><td>5432</td></tr>
+          <tr><td>redis</td><td>redis:7.2-alpine</td><td>6379</td></tr>
+          <tr><td>prometheus</td><td>prom/prometheus:v2.51.0</td><td>9090</td></tr>
+          <tr><td>grafana</td><td>grafana/grafana:10.4.0</td><td>3000</td></tr>
+          <tr><td>api-gateway … analytics-service</td><td>local builds</td><td>8080–8087</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h4>GitHub Actions Pipeline</h4>
+    <div class="card" style="margin-bottom:12px"><div class="card-title"><span class="badge badge-blue">Job 1</span> build-and-test (matrix: 9 modules)</div><p>Parallel JUnit runs per service. GHA services: PostgreSQL 16 + Redis 7. Uploads Surefire + JaCoCo coverage reports.</p></div>
+    <div class="card" style="margin-bottom:12px"><div class="card-title"><span class="badge badge-blue">Job 2</span> docker-build (main/develop only)</div><p>Builds JAR → Docker image → pushes to Amazon ECR tagged with git SHA + latest. GHA layer caching.</p></div>
+    <div class="card" style="margin-bottom:12px"><div class="card-title"><span class="badge badge-amber">Job 3</span> deploy-staging (develop branch)</div><p>Patches ECS task definition image tag via jq, registers new revision, updates logistics-staging cluster.</p></div>
+    <div class="card" style="margin-bottom:12px"><div class="card-title"><span class="badge badge-amber">Job 4</span> deploy-production (main branch)</div><p>Iterates all 8 services: aws ecs update-service --force-new-deployment. Waits for 4 key services to stabilize.</p></div>
+    <div class="card"><div class="card-title"><span class="badge badge-green">Job 5</span> security-scan (Trivy)</div><p>Aqua Trivy filesystem scan, CRITICAL + HIGH severity. Uploads SARIF to GitHub Security tab.</p></div>
+    <h4>Cloud Architecture (Production)</h4>
+    <pre>Route53 → ALB → ECS Fargate (8 services × task definitions)
+                       ↕
+             ECR (private image registry)
+             RDS PostgreSQL (Multi-AZ, one per service domain)
+             ElastiCache Redis (cluster mode)
+             MSK (managed Kafka)
+             CloudWatch Logs + Prometheus → Grafana</pre>
+  </section>
+
+  <section id="interview">
+    <h3><span class="icon">🎯</span> Interview Q&amp;A Guide</h3>
+    <div class="card" style="margin-bottom:14px"><div class="card-title">Q: Walk me through the order fulfillment flow end to end.</div><p>Client POSTs → Gateway validates JWT, forwards to Order Service → Order Service saves Order(PENDING), generates correlationId, publishes order-created → Inventory Service picks it up, acquires pessimistic locks per SKU, reserves stock → publishes inventory-reserved → Shipment Service creates the shipment record; Order Service updates status — both in parallel → dispatch and delivery via REST calls publish further events that Notification and Analytics services passively consume.</p></div>
+    <div class="card" style="margin-bottom:14px"><div class="card-title">Q: How do you handle distributed transactions without 2PC?</div><p>Choreography saga. Each service does a local DB transaction and publishes a Kafka event. If inventory fails, Inventory Service compensates (releases partial reservations) and publishes inventory-failed, which Order Service consumes to cancel the order. No 2PC, no global lock — each step is idempotent and reversible.</p></div>
+    <div class="card" style="margin-bottom:14px"><div class="card-title">Q: How do you prevent overselling under concurrent load?</div><p>Pessimistic locking — findBySkuForUpdate() acquires a row-level DB lock per SKU during the reservation transaction. This serializes concurrent reservations for the same item. Redis caching is used for reads, but all writes go through the locked DB path.</p></div>
+    <div class="card" style="margin-bottom:14px"><div class="card-title">Q: How does authentication work across services?</div><p>JWT validation happens once at the API Gateway edge. The gateway decodes the token, extracts userId and role, and forwards them as X-User-Id and X-User-Role headers. Services trust these headers — they never see external traffic directly. On logout, the access token goes into Redis with its remaining TTL. Refresh tokens rotate on every use and are stored in Postgres.</p></div>
+    <div class="card" style="margin-bottom:14px"><div class="card-title">Q: What happens if a Kafka consumer fails?</div><p>Manual acknowledgment (AckMode.MANUAL) — consumers only call ack.acknowledge() after successful processing. The Inventory consumer uses @RetryableTopic: 3 attempts with exponential backoff (1s base, 2× multiplier). After all retries the message lands in the *.DLT dead-letter topic for manual inspection and replay.</p></div>
+    <div class="card" style="margin-bottom:14px"><div class="card-title">Q: How does the analytics service scale under heavy order volume?</div><p>Pre-aggregated daily metric rows — one row per calendar day. Each Kafka event does a find-or-insert on the day's bucket and increments a counter. Dashboard queries are a simple date-range scan with no joins. This CQRS-style read model means analytical queries never touch the transactional services' databases.</p></div>
+    <div class="card" style="margin-bottom:14px"><div class="card-title">Q: How do you trace a request across multiple services?</div><p>A correlationId (UUID) is generated at order creation and propagated through every Kafka event payload and as an X-Correlation-ID header. All services log it via MDC. Prometheus + Grafana provide metrics dashboards scraping all 8 /actuator/prometheus endpoints.</p></div>
+    <div class="card" style="margin-bottom:14px"><div class="card-title">Q: Why choreography over orchestration?</div><p>Choreography keeps each service autonomous — no service knows about others, no single point of failure. The trade-off is flow visibility; we mitigate that with correlationId tracing and Kafka UI. For a well-defined saga like order → inventory → shipment, choreography is simpler and more scalable.</p></div>
+    <div class="card"><div class="card-title">Q: Why schemas instead of separate DBs in dev?</div><p>All 7 domains are separate schemas within one PostgreSQL instance in dev — logical isolation without running 7 DB containers locally. In production, each service gets its own RDS Multi-AZ instance: physically isolated, independently scalable, separately backed up.</p></div>
+  </section>
+</main>
+
+<script>
+  function setTheme(t){document.documentElement.setAttribute('data-theme',t);localStorage.setItem('theme',t)}
+  (function(){var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s)})();
+  var sections=document.querySelectorAll('section[id]');
+  var navLinks=document.querySelectorAll('nav a');
+  var observer=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){navLinks.forEach(function(a){a.classList.remove('active')});var active=document.querySelector('nav a[href="#'+e.target.id+'"]');if(active)active.classList.add('active')}})},{rootMargin:'-20% 0px -70% 0px'});
+  sections.forEach(function(s){observer.observe(s)});
+</script>
+</body>
+</html>
